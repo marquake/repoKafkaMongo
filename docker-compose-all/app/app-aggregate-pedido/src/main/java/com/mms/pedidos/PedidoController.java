@@ -31,7 +31,9 @@ public class PedidoController {
     }
 
     public void getClientes(){
-        String urlCliente = "http://localhost:8080/cliente";
+        System.out.println("getClientes()");
+        //String urlCliente = "http://localhost:8080/cliente";
+        String urlCliente = "http://app-cliente:8080/cliente";
         ResponseEntity<List<ClienteDTO>> responseCliente = restTemplate.exchange(
                 urlCliente,
                 HttpMethod.GET,
