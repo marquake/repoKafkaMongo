@@ -1,0 +1,33 @@
+version: '3.9'
+
+# docker-compose up -d --no-cache
+# docker-compose down
+services:
+
+  app-cliente:
+    build:
+      context: app/app-cliente
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  app-repartidor:
+    build:
+      context: app/app-repartidor
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+
+  app-pedido:
+    build:
+      context: app/app-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+
+  app-aggregate-pedido:
+    build:
+      context: app/app-aggregate-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
