@@ -4,9 +4,9 @@ WORKDIR /app
 COPY . .
 RUN mvn clean install package
 
-
 # Utiliza la imagen base de Eclipse Temurin (OpenJDK) con Alpine Linux
-FROM eclipse-temurin:17
+#FROM eclipse-temurin:17
+FROM eclipse-temurin:latest
 
 # Copia el archivo JAR generado (reemplaza con el nombre de tu JAR)
 COPY target/repartidor-0.0.1-SNAPSHOT.jar app.jar

@@ -1,13 +1,15 @@
-package com.mms.cliente;
+package com.mms.repartidor;
 
 import lombok.*;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ClienteDTO {
+@ToString
+public class RepartidorDTO {
     private Long id;
     private String name;
+    private String cod_repartidor;
 }

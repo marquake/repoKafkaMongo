@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class RepartidorDTO {
+public class PedidoDTO {
     private Long id;
-    private String name;
-    private String cod_repartidor;
+    private Long idCliente;
+    private Long idRepartidor;
 }

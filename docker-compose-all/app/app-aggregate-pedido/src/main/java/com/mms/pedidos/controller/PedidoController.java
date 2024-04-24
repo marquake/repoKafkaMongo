@@ -10,11 +10,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
-public class PedidoController {
+public class PedidoController extends URLs {
 
     // Crea una instancia de RestTemplate
     private RestTemplate restTemplate = new RestTemplate();
-
 
     PedidoService pedidoService;
 
@@ -31,11 +30,8 @@ public class PedidoController {
     }
 
     public void getClientes(){
-        System.out.println("getClientes()");
-        //String urlCliente = "http://localhost:8080/cliente";
-        String urlCliente = "http://app-cliente:8080/cliente";
         ResponseEntity<List<ClienteDTO>> responseCliente = restTemplate.exchange(
-                urlCliente,
+                getUrlCliente(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<ClienteDTO>>() {});
@@ -43,9 +39,8 @@ public class PedidoController {
         responseCliente.getBody().stream().forEach(System.out::println);
     }
     public void getRepartidores(){
-        String urlRepartidor = "http://localhost:8081/repartidor";
         ResponseEntity<List<RepartidorDTO>> responseRepartidor = restTemplate.exchange(
-                urlRepartidor,
+                getUrlRepartidor(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<RepartidorDTO>>() {});
@@ -53,14 +48,14 @@ public class PedidoController {
         responseRepartidor.getBody().stream().forEach(System.out::println);
     }
     public void getPedidos(){
-        String urlPedido = "http://localhost:8082/pedido";
         ResponseEntity<List<PedidoDTO>> responsePedido = restTemplate.exchange(
-                urlPedido,
+                getUrlPedido(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<PedidoDTO>>() {});
 
         responsePedido.getBody().stream().forEach(System.out::println);
     }
+
 }
 

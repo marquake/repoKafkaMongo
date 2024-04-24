@@ -2,11 +2,11 @@ package com.mms.pedidos;
 
 import lombok.*;
 
-@Builder
 @Setter
 @Getter
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class PedidoDTO {
     private Long id;

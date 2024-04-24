@@ -1,12 +1,13 @@
-package com.mms.pedidos;
+package com.mms.cliente;
 
 import lombok.*;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@ToString
 public class ClienteDTO {
     private Long id;
     private String name;
