@@ -1,1 +1,0 @@
-https://start.spring.io/#!type=gradle-project&language=java&platformVersion=3.2.5&packaging=jar&jvmVersion=17&groupId=com.mms&artifactId=pedidos&name=pedidos&description=Demo%20project%20for%20Spring%20Boot&packageName=com.mms.pedidos&dependencies=devtools,lombok,docker-compose,web,configuration-processor,data-jpa,actuator
