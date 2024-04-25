@@ -1,4 +1,4 @@
-package com.mms.repartidor;
+package com.mms.pedidos.dto;
 
 import lombok.*;
 

@@ -1,5 +1,6 @@
-package com.mms.pedidos;
+package com.mms.pedidos.service;
 
+import com.mms.pedidos.dto.PedidoDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

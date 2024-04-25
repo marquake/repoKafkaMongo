@@ -1,5 +1,10 @@
-package com.mms.pedidos;
+package com.mms.pedidos.controller;
 
+import com.mms.pedidos.URLs;
+import com.mms.pedidos.dto.ClienteDTO;
+import com.mms.pedidos.dto.PedidoDTO;
+import com.mms.pedidos.dto.RepartidorDTO;
+import com.mms.pedidos.service.PedidoService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

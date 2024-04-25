@@ -1,4 +1,4 @@
-package com.mms.cliente;
+package com.mms.pedidos.dto;
 
 import lombok.*;
 
