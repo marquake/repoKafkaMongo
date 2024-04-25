@@ -1,3 +1,11 @@
 kafdrop_mongoExpress/mongodb_data/journal/WiredTigerLog.0000000023
 kafdrop_mongoExpress/mongodb_data/journal/WiredTigerPreplog.0000000001
 kafdrop_mongoExpress/mongodb_data/journal/WiredTigerPreplog.0000000002
+docker-compose-all/mongodb-data/diagnostic.data/metrics.2024-04-24T14-28-23Z-00000
+docker-compose-all/mongodb-data/diagnostic.data/metrics.2024-04-25T07-32-31Z-00000
+docker-compose-all/mongodb-data/diagnostic.data/metrics.2024-04-25T07-59-38Z-00000
+docker-compose-all/mongodb-data/diagnostic.data/metrics.2024-04-25T09-34-17Z-00000
+docker-compose-all/mongodb-data/diagnostic.data/metrics.2024-04-25T12-07-10Z-00000
+docker-compose-all/mongodb-data/journal/WiredTigerLog.0000000011
+docker-compose-examples-main-clean-kafka-topics/mongodb-data/diagnostic.data/metrics.2024-04-25T07-32-31Z-00000
+docker-compose-all/mongodb-data/.mongodb/mongosh/6629170a63e6fa0d659c3adc_log
