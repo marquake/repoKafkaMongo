@@ -1,7 +1,9 @@
 package com.mms.pedidos;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class URLs {
 
     private static final String http = "http://";
@@ -13,7 +15,7 @@ public class URLs {
     @Value("${puerto-cliente}")
     private static final String port_cliente = "8080";
     @Value("${puerto-repartidor}")
-    private static final String port_repartidor = "8081";
+    private static final String port_repartidor = "8084";
     @Value("${puerto-pedido}")
     private static final String port_pedido = "8082";
 
