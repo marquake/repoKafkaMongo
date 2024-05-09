@@ -87,38 +87,38 @@ services:
         kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-baja
       "
 
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA-PEDIDO
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka-setup-pedido:
-  #    image: 'bitnami/kafka:latest'
-  #    depends_on:
-  #      - kafka
-  #    command: >
-  #      bash -c "
-  #        echo Waiting for Kafka to be ready... &&
-  #        sleep 30 &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-alta &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-baja &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-asignar &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-finalizar
-  #      "
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA-REPARTIDOR
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka-setup-repartidor:
-  #    image: 'bitnami/kafka:latest'
-  #    depends_on:
-  #      - kafka
-  #    command: >
-  #      bash -c "
-  #        echo Waiting for Kafka to be ready... &&
-  #        sleep 30 &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-alta &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-baja &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-coge-pedido &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-entrega-pedido
-  #      "
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-PEDIDO
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-pedido:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-asignar &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-finalizar
+      "
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-REPARTIDOR
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-repartidor:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-coge-pedido &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-entrega-pedido
+      "
 
   # ------------------------------------------------------------------------------------------------
   # KAFDROP
@@ -139,26 +139,26 @@ services:
     ports:
       - "${APP_CLIENTE_PORT}:${APP_CLIENTE_PORT}"
 
-# app-repartidor:
-#   build:
-#     context: app/app-repartidor
-#     dockerfile: Dockerfile
-#   ports:
-#     - "${APP_REPARTIDO_PORT}:${APP_REPARTIDO_PORT}"
-#
-# app-pedido:
-#   build:
-#     context: app/app-pedido
-#     dockerfile: Dockerfile
-#   ports:
-#     - "${APP_PEDIDO_PORT}:${APP_PEDIDO_PORT}"
-#
-# app-aggregate-pedido:
-#   build:
-#     context: app/app-aggregate-pedido
-#     dockerfile: Dockerfile
-#   ports:
-#     - "${APP_AGGREGATE_PEDIDO_PORT}:${APP_AGGREGATE_PEDIDO_PORT}"
+  app-repartidor:
+     build:
+       context: app/app-repartidor
+       dockerfile: Dockerfile
+     ports:
+       - "${APP_REPARTIDO_PORT}:${APP_REPARTIDO_PORT}"
+
+  app-pedido:
+    build:
+      context: app/app-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PEDIDO_PORT}:${APP_PEDIDO_PORT}"
+
+  app-aggregate-pedido:
+    build:
+      context: app/app-aggregate-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_AGGREGATE_PEDIDO_PORT}:${APP_AGGREGATE_PEDIDO_PORT}"
 
 ## ------------------------------------------------------------------------------------------------
 ## VOLUMES

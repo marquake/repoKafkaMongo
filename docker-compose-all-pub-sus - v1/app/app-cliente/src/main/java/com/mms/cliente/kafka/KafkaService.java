@@ -39,16 +39,17 @@ public class KafkaService {
         });
     }
 
-    public static String objToString(Object cliente){
-        String jsonClienteDTO = "";
+    public static String objToString(Object objSerializable){
+        String jsonDtoSerializado = "";
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            jsonClienteDTO = objectMapper.writeValueAsString(cliente);
+            jsonDtoSerializado = objectMapper.writeValueAsString(objSerializable);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return jsonClienteDTO;
+        return jsonDtoSerializado;
     }
+
 
     // Se crea el productor de Kafka y se le indica que la clave/valor van a ser Strings Serializadas.
     // Retorna el productor con las propiedades aplicadas.

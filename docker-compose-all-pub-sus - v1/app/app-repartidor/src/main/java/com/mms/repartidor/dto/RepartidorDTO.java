@@ -1,7 +1,8 @@
-package com.mms.repartidor;
+package com.mms.repartidor.dto;
 
 import lombok.*;
 
+@Data
 @Setter
 @Getter
 @Builder
