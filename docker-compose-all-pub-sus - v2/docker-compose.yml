@@ -1,0 +1,180 @@
+version: '3.9'
+
+# docker-compose up -d --no-cache
+# docker-compose up --build
+# docker-compose down
+services:
+
+  #  # ------------------------------------------------------------------------------------------------
+  #  # MONGODB
+  #  # ------------------------------------------------------------------------------------------------
+  #  mongodb:
+  #    image: mongo:latest
+  #    container_name: mongodb
+  #    hostname: mongodb
+  #    volumes:
+  #      - ./mongodb/initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  #      - ./mongodb-data:/data/db/
+  #      - ./mongodb-log:/var/log/mongodb/
+  #    env_file:
+  #      - .env
+  #    environment:
+  #      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+  #      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  #    ports:
+  #      - "${MONGO_PORT}:${MONGO_PORT}"
+  #    networks:
+  #      - mongodb_network
+  #
+  #  # ------------------------------------------------------------------------------------------------
+  #  # MONGO EXPRESS
+  #  # ------------------------------------------------------------------------------------------------
+  #  mongo-express:
+  #    image: mongo-express:latest
+  #    container_name: mongo-express
+  #    restart: always
+  #    environment:
+  #      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+  #      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  #      ME_CONFIG_MONGODB_PORT: ${MONGO_PORT}
+  #      ME_CONFIG_MONGODB_SERVER: 'mongodb'
+  #      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
+  #      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+  #    ports:
+  #      - ${MONGO_EXPRESS_PORT}:${MONGO_EXPRESS_PORT}
+  #    networks:
+  #      - mongodb_network
+  #    depends_on:
+  #      - mongodb
+
+  # ------------------------------------------------------------------------------------------------
+  # ZOOKEEPER
+  # ------------------------------------------------------------------------------------------------
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA
+  # ------------------------------------------------------------------------------------------------
+  kafka:
+    image: 'bitnami/kafka:latest'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    ports:
+      - '${KAFKA_PORT}:${KAFKA_PORT}'
+    depends_on:
+      - zookeeper
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA SETUP
+  # ------------------------------------------------------------------------------------------------
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-CLIENTE
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-cliente:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-baja
+      "
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-PEDIDO
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-pedido:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-asignar &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-finalizar
+      "
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-REPARTIDOR
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-repartidor:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-coge-pedido &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-entrega-pedido
+      "
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFDROP
+  # ------------------------------------------------------------------------------------------------
+  kafdrop:
+    image: 'obsidiandynamics/kafdrop'
+    ports:
+      - '${KAFDROP_PORT_HOST}:${KAFDROP_PORT_CONTENEDOR}'
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:${KAFKA_PORT}
+    depends_on:
+      - kafka
+
+  app-cliente:
+    build:
+      context: app/app-cliente
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_CLIENTE_PORT}:${APP_CLIENTE_PORT}"
+
+  app-repartidor:
+     build:
+       context: app/app-repartidor
+       dockerfile: Dockerfile
+     ports:
+       - "${APP_REPARTIDO_PORT}:${APP_REPARTIDO_PORT}"
+
+  app-pedido:
+    build:
+      context: app/app-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PEDIDO_PORT}:${APP_PEDIDO_PORT}"
+
+  app-aggregate-pedido:
+    build:
+      context: app/app-aggregate-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_AGGREGATE_PEDIDO_PORT}:${APP_AGGREGATE_PEDIDO_PORT}"
+
+## ------------------------------------------------------------------------------------------------
+## VOLUMES
+## ------------------------------------------------------------------------------------------------
+#volumes:
+#  mongodb-data:
+#    driver: local
+#    name: mongo-data
+#  mongodb-log:
+#    driver: local
+#    name: mongo-log
+#
+## ------------------------------------------------------------------------------------------------
+## NETWORKS
+## ------------------------------------------------------------------------------------------------
+#networks:
+#  mongodb_network:
+#    driver: bridge
+#    name: mongo-network

@@ -20,5 +20,4 @@ Proyecto con varios subproyectos relacionados:
       donde se suscribirán los servicios java. 
     
 
-NOTA: En esta versión se ha creado el API REST para dar de alta los eventos en las colas,
-	  solo los productores, no se consume.
+NOTA: En esta versión, se añaden los subcriptores de las colas de la versión 1.
