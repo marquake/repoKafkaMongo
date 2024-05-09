@@ -1,0 +1,12 @@
+version: '3.9'
+
+# docker-compose up --build
+# docker-compose up -d --no-cache
+# docker-compose down
+services:
+
+  app-repartidor:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8084"
