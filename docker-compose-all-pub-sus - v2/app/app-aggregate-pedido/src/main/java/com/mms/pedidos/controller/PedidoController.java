@@ -62,5 +62,14 @@ public class PedidoController extends URLs {
         responsePedido.getBody().stream().forEach(System.out::println);
     }
 
+    public void altaPedido(){
+
+        // insertar pedido
+
+        // repartido coge pedido
+
+        // repartidor cierra pedido
+
+    }
 }
 
