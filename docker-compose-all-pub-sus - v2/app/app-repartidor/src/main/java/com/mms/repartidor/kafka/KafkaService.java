@@ -10,13 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-public class KafkaService {
-
-    private static final String BOOTSTRAP_SERVERS = "http://kafka:9092";
-    private static final String TOPIC_ALTA = "repartidor-alta";
-    private static final String TOPIC_BAJA = "repartidor-baja";
-    private static final String TOPIC_COGE_PEDIDO = "repartidor-coge-pedido";
-    private static final String TOPIC_ENTREGA_PEDIDO = "repartidor-entrega-pedido";
+public class KafkaService implements KafkaCommon {
 
     // Realizo el envío enviando el productor y el dato.
     public static void sendMessageAlta(Producer<String, String> producer, String data) {

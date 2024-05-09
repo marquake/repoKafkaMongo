@@ -1,4 +1,4 @@
-package com.mms.cliente.kafka;
+package com.mms.pedidos.kafka;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 public interface KafkaCommon {
 
     final String BOOTSTRAP_SERVERS = "http://kafka:9092";
-    final String TOPIC_ALTA = "cliente-alta";
-    final String TOPIC_BAJA = "cliente-baja";
+    static final String TOPIC_ALTA = "pedido-alta";
+    static final String TOPIC_BAJA = "pedido-baja";
+    static final String TOPIC_ASIGNAR = "pedido-asignar";
+    static final String TOPIC_FINALIZAR = "pedido-finalizar";
 
     @Value("${topic.group.id}")
     final String groupId = "";

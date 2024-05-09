@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ClienteApplication {
 
 	@Autowired
-	static KafkaMessageConsumerBaja kafkaMessageConsumerBaja;
+	static KafkaMessageConsumerBaja 	kafkaMessageConsumerBaja;
 
 	@Autowired
 	static KafkaMessageConsumerAlta kafkaMessageConsumerAlta;

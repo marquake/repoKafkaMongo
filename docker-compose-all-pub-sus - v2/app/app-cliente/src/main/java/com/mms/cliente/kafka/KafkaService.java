@@ -45,7 +45,6 @@ public class KafkaService implements KafkaCommon {
         return jsonDtoSerializado;
     }
 
-
     // Se crea el productor de Kafka y se le indica que la clave/valor van a ser Strings Serializadas.
     // Retorna el productor con las propiedades aplicadas.
     public static Producer<String, String> createKafkaProducer() {
