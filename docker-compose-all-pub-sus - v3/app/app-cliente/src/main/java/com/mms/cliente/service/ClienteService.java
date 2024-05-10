@@ -1,13 +1,17 @@
 package com.mms.cliente.service;
 
 import com.mms.cliente.dto.ClienteDTO;
-import com.mms.cliente.kafka.KafkaService;
+import com.mms.cliente.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ClienteService {
+
+    @Autowired
+    ClienteRepository clienteRepository;
 
     public List<ClienteDTO> getListaClientes(){
         ClienteDTO c1 = ClienteDTO.builder().id(1L).name("pepe").build();
@@ -16,16 +20,18 @@ public class ClienteService {
     }
 
     public void altaCliente(ClienteDTO clienteDTO){
-        KafkaService.sendMessageAlta(
-                KafkaService.createKafkaProducer(),
-                KafkaService.objToString(clienteDTO)
-        );
+//        KafkaService.sendMessageAlta(
+//                KafkaService.createKafkaProducer(),
+//                KafkaService.objToString(clienteDTO)
+//        );
+
+        clienteRepository.save(clienteDTO);
     }
 
     public void bajaCliente(Long idCliente){
-        KafkaService.sendMessageBaja(
-                KafkaService.createKafkaProducer(),
-                KafkaService.objToString(idCliente)
-        );
+//        KafkaService.sendMessageBaja(
+//                KafkaService.createKafkaProducer(),
+//                KafkaService.objToString(idCliente)
+//        );
     }
 }
