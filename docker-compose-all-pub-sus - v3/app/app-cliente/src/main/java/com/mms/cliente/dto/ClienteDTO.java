@@ -2,6 +2,8 @@ package com.mms.cliente.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Setter
@@ -10,8 +12,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Document(collection = "cliente")
 public class ClienteDTO {
 
+    @Id
     @JsonProperty("id")
     private Long id;
 
