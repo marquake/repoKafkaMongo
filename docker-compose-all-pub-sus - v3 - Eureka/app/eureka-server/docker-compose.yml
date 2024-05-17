@@ -1,0 +1,12 @@
+version: '3.9'
+
+# docker-compose up --build
+# docker-compose up -d --no-cache
+# docker-compose down
+services:
+
+  eureka-server:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
