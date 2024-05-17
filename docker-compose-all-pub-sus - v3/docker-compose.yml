@@ -47,90 +47,90 @@ services:
     depends_on:
       - mongodb
 
-  #  # ------------------------------------------------------------------------------------------------
-  #  # ZOOKEEPER
-  #  # ------------------------------------------------------------------------------------------------
-  #  zookeeper:
-  #    image: 'bitnami/zookeeper:latest'
-  #    environment:
-  #      - ALLOW_ANONYMOUS_LOGIN=yes
-  #
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka:
-  #    image: 'bitnami/kafka:latest'
-  #    environment:
-  #      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-  #      - ALLOW_PLAINTEXT_LISTENER=yes
-  #    ports:
-  #      - '${KAFKA_PORT}:${KAFKA_PORT}'
-  #    depends_on:
-  #      - zookeeper
-  #
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA SETUP
-  #  # ------------------------------------------------------------------------------------------------
-  #
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA-CLIENTE
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka-setup-cliente:
-  #    image: 'bitnami/kafka:latest'
-  #    depends_on:
-  #      - kafka
-  #    command: >
-  #      bash -c "
-  #        echo Waiting for Kafka to be ready... &&
-  #        sleep 30 &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-alta &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-baja
-  #      "
-  #
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA-PEDIDO
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka-setup-pedido:
-  #    image: 'bitnami/kafka:latest'
-  #    depends_on:
-  #      - kafka
-  #    command: >
-  #      bash -c "
-  #        echo Waiting for Kafka to be ready... &&
-  #        sleep 30 &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-alta &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-baja &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-asignar &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-finalizar
-  #      "
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFKA-REPARTIDOR
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafka-setup-repartidor:
-  #    image: 'bitnami/kafka:latest'
-  #    depends_on:
-  #      - kafka
-  #    command: >
-  #      bash -c "
-  #        echo Waiting for Kafka to be ready... &&
-  #        sleep 30 &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-alta &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-baja &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-coge-pedido &&
-  #        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-entrega-pedido
-  #      "
-  #
-  #  # ------------------------------------------------------------------------------------------------
-  #  # KAFDROP
-  #  # ------------------------------------------------------------------------------------------------
-  #  kafdrop:
-  #    image: 'obsidiandynamics/kafdrop'
-  #    ports:
-  #      - '${KAFDROP_PORT_HOST}:${KAFDROP_PORT_CONTENEDOR}'
-  #    environment:
-  #      - KAFKA_BROKERCONNECT=kafka:${KAFKA_PORT}
-  #    depends_on:
-  #      - kafka
+  # ------------------------------------------------------------------------------------------------
+  # ZOOKEEPER
+  # ------------------------------------------------------------------------------------------------
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA
+  # ------------------------------------------------------------------------------------------------
+  kafka:
+    image: 'bitnami/kafka:latest'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    ports:
+      - '${KAFKA_PORT}:${KAFKA_PORT}'
+    depends_on:
+      - zookeeper
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA SETUP
+  # ------------------------------------------------------------------------------------------------
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-CLIENTE
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-cliente:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic cliente-baja
+      "
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-PEDIDO
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-pedido:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-asignar &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic pedido-finalizar
+      "
+  # ------------------------------------------------------------------------------------------------
+  # KAFKA-REPARTIDOR
+  # ------------------------------------------------------------------------------------------------
+  kafka-setup-repartidor:
+    image: 'bitnami/kafka:latest'
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+        echo Waiting for Kafka to be ready... &&
+        sleep 30 &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-alta &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-baja &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-coge-pedido &&
+        kafka-topics.sh --create --if-not-exists --bootstrap-server kafka:9092 --partitions 1 --replication-factor 1 --topic repartidor-entrega-pedido
+      "
+
+  # ------------------------------------------------------------------------------------------------
+  # KAFDROP
+  # ------------------------------------------------------------------------------------------------
+  kafdrop:
+    image: 'obsidiandynamics/kafdrop'
+    ports:
+      - '${KAFDROP_PORT_HOST}:${KAFDROP_PORT_CONTENEDOR}'
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:${KAFKA_PORT}
+    depends_on:
+      - kafka
 
   app-cliente:
     build:
@@ -152,45 +152,66 @@ services:
 #    networks:
 #      - mongodb_network
 
-#  app-repartidor:
-#     build:
-#       context: app/app-repartidor
-#       dockerfile: Dockerfile
-#     ports:
-#       - "${APP_REPARTIDO_PORT}:${APP_REPARTIDO_PORT}"
-#     links:
-#      - mongodb
-#     depends_on:
-#      - mongodb
-#     networks:
-#      - mongodb_network
-#
-#  app-pedido:
-#    build:
-#      context: app/app-pedido
-#      dockerfile: Dockerfile
-#    ports:
-#      - "${APP_PEDIDO_PORT}:${APP_PEDIDO_PORT}"
-#    links:
-#      - mongodb
-#    depends_on:
-#      - mongodb
+  app-repartidor:
+     build:
+       context: app/app-repartidor
+       dockerfile: Dockerfile
+     ports:
+       - "${APP_REPARTIDO_PORT}:${APP_REPARTIDO_PORT}"
+     env_file:
+      - .env
+     environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.data.mongodb.uri" : "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin"
+        }'
+     links:
+      - mongodb
+     depends_on:
+      - mongodb
+      - mongo-express
 #    networks:
 #      - mongodb_network
-#
-#  app-aggregate-pedido:
-#    build:
-#      context: app/app-aggregate-pedido
-#      dockerfile: Dockerfile
-#    ports:
-#      - "${APP_AGGREGATE_PEDIDO_PORT}:${APP_AGGREGATE_PEDIDO_PORT}"
-#    links:
-#      - mongodb
-#    depends_on:
-#      - mongodb
+
+  app-pedido:
+    build:
+      context: app/app-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PEDIDO_PORT}:${APP_PEDIDO_PORT}"
+    env_file:
+      - .env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.data.mongodb.uri" : "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin"
+        }'
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+      - mongo-express
 #    networks:
 #      - mongodb_network
-#
+
+  app-aggregate-pedido:
+    build:
+      context: app/app-aggregate-pedido
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_AGGREGATE_PEDIDO_PORT}:${APP_AGGREGATE_PEDIDO_PORT}"
+    env_file:
+      - .env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "spring.data.mongodb.uri" : "mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin"
+        }'
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+      - mongo-express
+#    networks:
+#      - mongodb_network
+
 # ------------------------------------------------------------------------------------------------
 # VOLUMES
 # ------------------------------------------------------------------------------------------------
