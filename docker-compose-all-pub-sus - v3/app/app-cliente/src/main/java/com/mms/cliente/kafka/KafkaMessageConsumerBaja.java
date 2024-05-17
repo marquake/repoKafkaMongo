@@ -1,28 +1,26 @@
 package com.mms.cliente.kafka;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.kafka.annotation.EnableKafka;
+import com.mms.cliente.service.ClienteService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
 public class KafkaMessageConsumerBaja extends KafkaMessage {
 
-	public KafkaMessageConsumerBaja() {
+	@Value("${topic.group.id}")
+	private final String GROUP_ID = "";
+
+	ClienteService clienteService;
+
+	public KafkaMessageConsumerBaja(ClienteService clienteService) {
 		super();
+		this.clienteService = clienteService;
 	}
 
-//	//@PostConstruct
-//	@KafkaListener
-//	public void subscribe() {
-//		consumer.subscribe(Arrays.asList(TOPIC_BAJA));
-//		new Thread(() -> pollMessages(consumer, TOPIC_BAJA)).start();
-//	}
-//
-//	KafkaCommon.to
-//
-//	@KafkaListener(topics = "topic-baja", groupId = "group_id", containerFactory = "kafkaListenerContainerFactoryBaja")
-//	public void consume(String message) {
-//		System.out.println("Mensaje recibido en topic-baja: " + message);
-//	}
+	@KafkaListener(topics = TOPIC_BAJA, groupId = GROUP_ID, containerFactory = "kafkaListenerContainerFactoryBaja")
+	public void consume(String message) {
+		clienteService.procesarMensajeBaja(message);
+	}
+
 }

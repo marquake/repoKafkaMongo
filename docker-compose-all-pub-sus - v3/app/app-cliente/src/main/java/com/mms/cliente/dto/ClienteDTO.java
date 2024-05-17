@@ -19,6 +19,6 @@ public class ClienteDTO {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("name")
+    @JsonProperty("nom_cliente")
     private String name;
 }

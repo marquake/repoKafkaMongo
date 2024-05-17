@@ -11,7 +11,7 @@ public interface KafkaCommon {
     final String TOPIC_BAJA = "cliente-baja";
 
     @Value("${topic.group.id}")
-    final String groupId = "";
+    final String GROUP_ID = "";
 
     final Long TIEMPO_POLLING = 100L;
 }

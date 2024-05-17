@@ -1,28 +1,25 @@
 package com.mms.cliente.kafka;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.kafka.annotation.EnableKafka;
+import com.mms.cliente.service.ClienteService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaMessageConsumerAlta extends KafkaMessage{
+public class KafkaMessageConsumerAlta extends KafkaMessage {
 
-	public KafkaMessageConsumerAlta() {
+	@Value("${topic.group.id}")
+	private final String GROUP_ID = "";
+
+	ClienteService clienteService;
+
+	public KafkaMessageConsumerAlta(ClienteService clienteService) {
 		super();
-	}
+		this.clienteService = clienteService;
+	}	
 
-//	@PostConstruct
-//	public void subscribe() {
-//		//consumer.subscribe(Arrays.asList(TOPIC_ALTA));
-//		consumer.subscribe(List.of(TOPIC_ALTA));
-//		new Thread(() -> pollMessages(consumer, TOPIC_ALTA)).start();
-//	}
-
-	//groupIdCliente
-	//@KafkaListener(topics = TOPIC_ALTA, groupId = groupId, containerFactory = "kafkaListenerContainerFactoryAlta")
-	@KafkaListener(topics = TOPIC_ALTA, groupId = "groupIdCliente", containerFactory = "kafkaListenerContainerFactoryAlta")
+	@KafkaListener(topics = TOPIC_ALTA, groupId = GROUP_ID, containerFactory = "kafkaListenerContainerFactoryAlta")
 	public void consume(String message) {
-		System.out.println("Mensaje recibido en topic-alta: " + message);
+		clienteService.procesarMensajeAlta(message);
 	}
 }

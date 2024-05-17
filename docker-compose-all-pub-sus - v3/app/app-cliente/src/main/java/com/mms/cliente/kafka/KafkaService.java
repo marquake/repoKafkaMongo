@@ -47,14 +47,14 @@ public class KafkaService implements KafkaCommon {
 
     // Método para deserializar un JSON a un objeto de tipo ClienteDTO
     public static <T> T stringToObj(String jsonString, Class<T> claseT) {
-        T clienteDTO = null;
+        T obj = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            clienteDTO = objectMapper.readValue(jsonString, claseT);
+            obj = objectMapper.readValue(jsonString, claseT);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return clienteDTO;
+        return obj;
     }
 
     // Se crea el productor de Kafka y se le indica que la clave/valor van a ser Strings Serializadas.

@@ -3,7 +3,6 @@ package com.mms.cliente.service;
 import com.mms.cliente.dto.ClienteDTO;
 import com.mms.cliente.kafka.KafkaService;
 import com.mms.cliente.repository.ClienteRepository;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,17 +34,13 @@ public class ClienteService {
         );
     }
 
-    public void procesarRecord(ConsumerRecord<String, String> record) {
-        System.out.println("procesarRecord()");
-        System.out.println("Key: " + record.key() + ", Value: " + record.value());
-        System.out.println("Partition: " + record.partition() + ", Offset:" + record.offset());
-
-        ClienteDTO clienteDTO = KafkaService.stringToObj(record.value(), ClienteDTO.class);
-
-        System.out.println("procesarRecord(): este objeto se obtiene de la cola");
-        System.out.println("clienteDTO: " + clienteDTO);
-
+    public void procesarMensajeAlta(String mensaje) {
+        ClienteDTO clienteDTO = KafkaService.stringToObj(mensaje, ClienteDTO.class);
         clienteRepository.save(clienteDTO);
+    }
 
+    public void procesarMensajeBaja(String mensaje) {
+        Long id = KafkaService.stringToObj(mensaje, Long.class);
+        clienteRepository.deleteById(id);
     }
 }
